@@ -1,0 +1,12 @@
+# roles/myapp/meta/argument_specs.yml
+---
+argument_specs:
+  # roles/myapp/tasks/main.yml entry point
+  main:
+    short_description: The main entry point for the nix role.
+    options:
+      nodeto_nix_users:
+        type: "dict"
+        required: true
+        description: "usernames as keys and and list of packages required by the user
+          as the values"

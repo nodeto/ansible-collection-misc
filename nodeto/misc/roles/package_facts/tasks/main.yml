@@ -1,0 +1,24 @@
+- name: SET PACKAGES PROXY
+  ansible.builtin.copy:
+    content: >
+      Acquire::http::Proxy
+      "{{ packages_apt_proxies[host_domain] }}";
+    dest: /etc/apt/apt.conf.d/02proxy
+    mode: "0644"
+  become: "yes"
+  when: >-
+    packages_apt_proxies is defined
+    and host_domain in packages_apt_proxies
+
+- name: PERFORM APT CACHE UPDATE
+  ansible.builtin.apt:
+    update_cache: "yes"
+  become: "yes"
+
+- name: GATHER PACKAGE FACTS
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: SET EMPTY LIST FOR FIRST RUN OF PACKAGES.YML
+  ansible.builtin.set_fact:
+    package_facts_missing_packages: []

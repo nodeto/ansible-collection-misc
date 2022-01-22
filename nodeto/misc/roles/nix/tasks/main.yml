@@ -1,0 +1,30 @@
+- name: NIX IS INSTALLED FOR ALL USERS
+  ansible.builtin.include_role:
+    name: nodeto.misc.package_facts
+    tasks_from: packages.yml
+  vars:
+    package_facts_needed:
+      - nix-setup-systemd
+
+- name: SHELL HOOK INSTALLED SYSTEM WIDE
+  ansible.builtin.copy:
+    src: files/nix.sh
+    dest: /etc/profile.d/
+    mode: "0644"
+
+- name: USERS ARE IN NIX-USERS GROUP
+  ansible.builtin.user:
+    name: "{{ user['name'] }}"
+    append: "yes"
+    groups: nix-users
+  loop: "{{ nix_users | dict2items(key_name='name') }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user['name'] }}"
+
+- name: INSTALL NIX PACKAGES
+  ansible.builtin.include_tasks: user_steps.yml
+  loop: "{{ nix_users | dict2items(key_name='name', value_name='packages') }}"
+  loop_control:
+    loop_var: user
+    label: "{{ nix_users['key'] }}"

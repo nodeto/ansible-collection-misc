@@ -1,0 +1,23 @@
+- name: ENSURE PACKAGE LIST IS SET
+  ansible.builtin.assert:
+    that:
+      - package_facts_needed != None
+    msg: "package_facts_needed not set"
+
+- name: GENERATE LIST OF MISSING PACKAGES
+  ansible.builtin.set_fact:
+    package_facts_missing_packages: "{{ package_facts_missing_packages + [item] }}"
+  when: item not in ansible_facts.packages
+  loop: "{{ package_facts_needed }}"
+
+- name: "INSTALL PACKAGES {{ package_facts_missing_packages | join(', ') }}"
+  ansible.builtin.apt:
+    name: "{{ package_facts_missing_packages }}"
+    state: present
+  when: package_facts_missing_packages | length > 0
+  become: "yes"
+
+- name: RESET VARIABLES FOR NEXT RUN
+  ansible.builtin.set_fact:
+    package_facts_needed: null
+    package_facts_missing_packages: []

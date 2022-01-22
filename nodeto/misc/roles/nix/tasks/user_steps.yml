@@ -1,0 +1,35 @@
+- name: BLOCK WITH NIX TAG
+  tags: nix
+  become: "yes"
+  become_user: "{{ user['key'] }}"
+  block:
+    - name: "NIXPKGS CHANNEL CONFIGURED FOR {{ user['name'] }}"
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/nix-channel
+          - --add
+          - https://nixos.org/channels/nixpkgs-unstable
+        creates: "{{ (users_home_dirs[user['name']], '.nix-channels') | path_join }}"
+
+    - name: NIX CHANNELS UPDATED AND NIXPKGS IS PRESENT
+      ansible.builtin.command:
+        argv:
+          - /usr/bin/nix-channel
+          - --update
+        creates: >-
+          {{
+            (
+              users_home_dirs[user['name']]
+              ,'.nix-defexpr/channels/nixpkgs/.version'
+            )
+            | path_join
+          }}
+
+    - name: >-
+        NIX PACKAGES {{ user['nix_packages'] | join(', ') }}
+        INSTALLED FOR {{ user['name'] }}
+      nix:
+        name: "{{ item }}"
+        state: present
+        attr: "yes"
+      loop: "{{ user['nix_packages'] }}"

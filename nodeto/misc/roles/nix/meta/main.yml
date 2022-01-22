@@ -1,0 +1,9 @@
+galaxy_info:
+  role_name: nodeto.misc.nix
+  author: Kevin Joyce
+  description: Install nix multi-user in Debian 11 and install packages for users.
+  license: MIT
+  min_ansible_version: 2.10
+  galaxy_tags: []
+
+dependencies: []

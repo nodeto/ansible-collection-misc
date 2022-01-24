@@ -1,6 +1,6 @@
 # roles/myapp/meta/argument_specs.yml
 ---
-argument_specs:
+argument_spec:
   # roles/myapp/tasks/main.yml entry point
   main:
     short_description: The main entry point for the nix role.

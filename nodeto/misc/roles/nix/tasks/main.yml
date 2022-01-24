@@ -17,14 +17,14 @@
     name: "{{ user['name'] }}"
     append: "yes"
     groups: nix-users
-  loop: "{{ nix_users | dict2items(key_name='name') }}"
+  loop: "{{ nodeto_nix_users | dict2items(key_name='name') }}"
   loop_control:
     loop_var: user
     label: "{{ user['name'] }}"
 
 - name: INSTALL NIX PACKAGES
   ansible.builtin.include_tasks: user_steps.yml
-  loop: "{{ nix_users | dict2items(key_name='name', value_name='packages') }}"
+  loop: "{{ nodeto_nix_users | dict2items(key_name='name', value_name='packages') }}"
   loop_control:
     loop_var: user
-    label: "{{ nix_users['key'] }}"
+    label: "{{ user['name'] }}"

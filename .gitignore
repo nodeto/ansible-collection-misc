@@ -1,3 +1,6 @@
+# ygnore .vscode
+.vscode/
+
 # ignore build artifacts
 *.tar.gz
 

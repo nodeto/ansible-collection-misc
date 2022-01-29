@@ -1,0 +1,152 @@
+{
+    "metadata": {
+        "namespace": "nodeto",
+        "name": "misc",
+        "version": "1.0.0",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "description": "your collection description",
+        "repository": "http://example.com/repository",
+        "documentation": "http://docs.example.com",
+        "homepage": "http://example.com",
+        "issues": "http://example.com/issue/tracker",
+        "authors": [
+            "your name <example@domain.com>"
+        ],
+        "tags": [],
+        "license_file": null,
+        "readme": "README.md",
+        "dependencies": {}
+    },
+    "docs_blob": {
+        "collection_readme": {
+            "name": "README.md",
+            "html": "<h1>Ansible Collection - nodeto.misc</h1>\n<p>Documentation for the collection.</p>"
+        },
+        "documentation_files": [],
+        "contents": [
+            {
+                "content_name": "nix",
+                "content_type": "role",
+                "doc_strings": {},
+                "readme_file": "README.md",
+                "readme_html": "<h1>NIX Role</h1>\n<p>'''\n- ansible.builtin.import_role:\n    name: nix\n  vars:\n    nodeto_nix_users:\n      a_user:\n      - nixpkgs.git\n      - nixpkgs.podman\n      - nixpkgs.podman-compose\n'''</p>"
+            },
+            {
+                "content_name": "package_facts",
+                "content_type": "role",
+                "doc_strings": {},
+                "readme_file": "README.md",
+                "readme_html": "<h1>Package Facts</h1>\n<p>Helps speed up playbooks by caching the list of available package the first\ntime it is called and then invoking ansible.builtin.apt only if the package is\nnot already installed.</p>\n<p>To use, first specify nodeto.misc.package_facts as a dependency to your role.\nThis will load the package list.</p>\n<p>Then to install a package use the following format:</p>\n<pre><code>- name: NIX IS INSTALLED FOR ALL USERS\n  ansible.builtin.include_role:\n    name: nodeto.misc.package_facts\n    tasks_from: packages.yml\n  vars:\n    package_facts_needed:\n      - restic\n</code></pre>"
+            },
+            {
+                "content_name": "nix",
+                "content_type": "module",
+                "doc_strings": {
+                    "doc": {
+                        "attributes": {
+                            "check_mode": {
+                                "support": "full"
+                            },
+                            "diff_mode": {
+                                "support": "none"
+                            },
+                            "platform": {
+                                "platforms": "posix"
+                            }
+                        },
+                        "author": [
+                            "Kridsada Thanabulpong"
+                        ],
+                        "collection": "nodeto.misc",
+                        "description": [
+                            "The C(nix) module manages nix packages and can update channels"
+                        ],
+                        "filename": "/tmp/tmp4i6k1pye/ansible_collections/nodeto/misc/plugins/modules/nix.py",
+                        "has_action": false,
+                        "module": "nix",
+                        "options": [
+                            {
+                                "name": "attr",
+                                "default": false,
+                                "description": [
+                                    "If attr is C(yes) package names will be specific attributes"
+                                ],
+                                "type": "bool"
+                            },
+                            {
+                                "name": "expr",
+                                "default": "/.nix-defexpr",
+                                "description": [
+                                    "Path to the nix expression"
+                                ]
+                            },
+                            {
+                                "name": "name",
+                                "description": [
+                                    "Selected state will be applied to the package(s) in this list"
+                                ]
+                            },
+                            {
+                                "name": "state",
+                                "choices": [
+                                    "present",
+                                    "absent",
+                                    "latest"
+                                ],
+                                "default": "present",
+                                "description": [
+                                    "Choose present, absent, or latest"
+                                ]
+                            },
+                            {
+                                "name": "update_channels",
+                                "default": false,
+                                "description": [
+                                    "Updates nix channels"
+                                ],
+                                "type": "bool"
+                            },
+                            {
+                                "name": "upgrade_packages",
+                                "default": false,
+                                "description": [
+                                    "Upgrades all installed packages"
+                                ],
+                                "type": "bool"
+                            }
+                        ],
+                        "short_description": "Manage nix packages",
+                        "version_added": 10.0,
+                        "version_added_collection": "nodeto.misc"
+                    },
+                    "examples": "\n- name: nix-channel --update\n  nix: update_channels=yes \n\n- name: nix-env -i package\n  nix: name=package state=present\n\n- name: nix-env -i package && nix-env -u package\n  nix: name=package state=latest\n\n- name: nix-env -e package\n  nix: name=package state=absent\n\n- name: nix-env -iA package\n  nix: name=package state=present attr=yes\n\n- name: nix-env -f '<nixpkgs>' -i package\n  nix: name=package state=present expr='<nixpkgs>'\n  \n- name: nix-env -u\n  nix: upgrade_packages=yes\n",
+                    "metadata": null,
+                    "return": null
+                },
+                "readme_file": null,
+                "readme_html": null
+            }
+        ]
+    },
+    "contents": [
+        {
+            "name": "nix",
+            "content_type": "role",
+            "description": "Install nix multi-user in Debian 11 and install packages for users."
+        },
+        {
+            "name": "package_facts",
+            "content_type": "role",
+            "description": "Gather list of installed package and check the list before installing a package required by a role."
+        },
+        {
+            "name": "nix",
+            "content_type": "module",
+            "description": "Manage nix packages"
+        }
+    ],
+    "custom_license": null,
+    "requires_ansible": ">=2.10"
+}

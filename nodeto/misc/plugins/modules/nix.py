@@ -2,6 +2,7 @@
 from ansible.module_utils.basic import *
 from collections import namedtuple
 
+# {{ documentation }}
 
 NixPkgResult = namedtuple('NixPkgResult', [
     'failed',
@@ -169,7 +170,7 @@ def main():
     module = AnsibleModule(
         supports_check_mode=True,
         argument_spec=dict(
-            name=dict(aliases=['pkg', 'name'], required=False, type='list'),
+            name=dict(aliases=['pkg'], required=False, type='list'),
             expr=dict(require=False, default=None),
             attr=dict(require=False, default=None, type='bool'),
             update_channels=dict(required=False, type='bool'),

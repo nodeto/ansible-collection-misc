@@ -1,0 +1,8 @@
+galaxy_info:
+  role_name: nodeto.misc.package_facts
+  author: Kevin Joyce
+  description: "Gather list of installed package and check the list before
+    installing a package required by a role."
+  license: MIT
+  min_ansible_version: 2.10
+  galaxy_tags: []

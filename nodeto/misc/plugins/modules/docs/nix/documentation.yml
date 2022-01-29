@@ -1,0 +1,46 @@
+---
+module: nix
+version_added: 10.0
+short_description: Manage nix packages
+description:
+    - The C(nix) module manages nix packages and can update channels
+options:
+  name:
+    description:
+    - Selected state will be applied to the package(s) in this list
+  state:
+    description:
+    - Choose present, absent, or latest
+    choices:
+    - present
+    - absent
+    - latest
+    default: present
+  attr:
+    description:
+    - If attr is C(yes) package names will be specific attributes
+    type: bool
+    default: no
+  expr:
+    description:
+    - Path to the nix expression
+    default: "/.nix-defexpr"
+  update_channels:
+    description:
+    - Updates nix channels
+    type: bool
+    default: no
+  upgrade_packages:
+    description:
+    - Upgrades all installed packages
+    type: bool
+    default: no
+author:
+    - Kridsada Thanabulpong
+attributes:
+  check_mode:
+    support: full
+  diff_mode:
+    support: none
+  platform:
+    platforms: posix

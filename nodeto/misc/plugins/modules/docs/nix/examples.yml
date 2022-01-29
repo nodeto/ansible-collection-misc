@@ -1,0 +1,20 @@
+- name: nix-channel --update
+  nix: update_channels=yes 
+
+- name: nix-env -i package
+  nix: name=package state=present
+
+- name: nix-env -i package && nix-env -u package
+  nix: name=package state=latest
+
+- name: nix-env -e package
+  nix: name=package state=absent
+
+- name: nix-env -iA package
+  nix: name=package state=present attr=yes
+
+- name: nix-env -f '<nixpkgs>' -i package
+  nix: name=package state=present expr='<nixpkgs>'
+  
+- name: nix-env -u
+  nix: upgrade_packages=yes

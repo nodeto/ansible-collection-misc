@@ -14,10 +14,12 @@
   ansible.builtin.apt:
     update_cache: "yes"
   become: "yes"
+  when: packages_get_facts | default(True)
 
 - name: GATHER PACKAGE FACTS
   ansible.builtin.package_facts:
     manager: auto
+  when: packages_get_facts | default(True)
 
 - name: SET EMPTY LIST FOR FIRST RUN OF PACKAGES.YML
   ansible.builtin.set_fact:

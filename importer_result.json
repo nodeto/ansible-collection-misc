@@ -63,7 +63,7 @@
                         "description": [
                             "The C(nix) module manages nix packages and can update channels"
                         ],
-                        "filename": "/tmp/tmp4i6k1pye/ansible_collections/nodeto/misc/plugins/modules/nix.py",
+                        "filename": "/tmp/tmpb0arg2j7/ansible_collections/nodeto/misc/plugins/modules/nix.py",
                         "has_action": false,
                         "module": "nix",
                         "options": [
